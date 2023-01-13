@@ -18,7 +18,8 @@ class GanamasUser extends Model
         'ffvv',
         'dex_id',
         'codigo_dex',
-        'cod_territorio'
+        'cod_territorio',
+        'active'
     ];
 
 }
