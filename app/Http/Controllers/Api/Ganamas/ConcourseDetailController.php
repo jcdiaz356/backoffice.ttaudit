@@ -158,7 +158,8 @@
             $sql="
             select s._id,s.id, s.fullname,s.sku,s.umc from ganamas_concourse_details cd
 left join ganamas_concourse s on cd.concourse_id = s._id
- where cd.seller_id ='".$request->get('id')."' and month(cd.fecha)=".$request->get('month')." and year(cd.fecha)=".$request->get('year')." group by cd.concourse_id,s._id,s.id, s.fullname,s.sku,s.umc
+ where cd.seller_id ='".$request->get('id')."' and month(cd.fecha)=".$request->get('month')." and year(cd.fecha)=".$request->get('year')."
+ group by cd.concourse_id,s._id,s.id, s.fullname,s.sku,s.umc
             ";
 
             $concourses = DB::select($sql);

@@ -6,6 +6,9 @@
     use App\Http\Controllers\Api\Ganamas\UserController;
 
     Route::apiResource('promotions', PromotionsController::class);
+
+    Route::post('promotionsForZone', [PromotionsController::class,'promotionsForZone']);
+
     Route::post('getUserForCode', [UserController::class,'getUserForCode']);
 
     Route::post('loadUserSaveTable',[UserController::class,'loadUserSaveTable']);

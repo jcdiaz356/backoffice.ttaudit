@@ -70,6 +70,32 @@ class PromotionsController extends Controller
     }
 
 
+    public function  promotionsForZone(Request $request){
+
+        $promotion_id = $request->get('promotion_id') ;
+        $zone_id = $request->get('zone_id') ;
+
+       //-- Promotion::with('promotionDetails')
+
+//        $promotion= Promotion::where('promotion_id',$promotion_id)
+//            ->where('zone_id',$zone_id)
+//            ->get();
+        $promotion= Promotion::find($promotion_id)
+            ->with(['promotions_details' => function ($q) use($zone_id,$promotion_id) {
+              //  $q->whereHas('types', function($q) use($SpecificID) {
+                    $q->where('zone_id', $zone_id)->where('promotion_id',$promotion_id);
+
+               // });
+            }]);
+
+
+
+        return  $promotion;
+
+
+    }
+
+
 
 
 
