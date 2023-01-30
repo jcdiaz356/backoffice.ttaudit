@@ -126,8 +126,9 @@ SELECT
         if(GanamasUser::where('cod_territorio',$request->get('code'))->where('active',1)->exists()){
             $user = DB::table('ganamas_user as u')
                 ->select('u._id as id','u.cod_territorio as code','u.fullname as name','u.ffvv',
-                    'd.fullname as dex','d._id as dex_id')
-                ->leftJoin('ganamas_dex as d', 'd._id', '=', 'u.codigo_dex')
+                    'd.fullname as dex','d._id','dex_id','d.zone_id','z.name as  zone_name')
+                ->leftJoin('ganamas_dex as d', 'd.id', '=', 'u.dex_id')
+                ->leftJoin('ganamas_zones as z', 'd.zone_id', '=', 'z.id')
                 ->where('u.cod_territorio',$request->get('code'))
                 ->where('u.active',1)
                 ->first();
