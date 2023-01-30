@@ -16,6 +16,7 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         {{--  alertas--}}
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
         <!-- Styles -->
         @livewireStyles
     </head>
@@ -43,5 +44,7 @@
         @stack('modals')
 
         @livewireScripts
+
+        @stack('js')
     </body>
 </html>

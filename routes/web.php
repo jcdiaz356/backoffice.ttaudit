@@ -18,11 +18,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified'
-])->group(function () {
+Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
@@ -30,6 +26,8 @@ Route::middleware([
     Route::get('/promotions', function () {
         return view('ganamas.promotions');
     })->name('promotions');
+
+    Route::get('/promotions/promotions_details/{id}',App\Http\Livewire\PromotionsDetails\ListPromotionsDetails::class)->name('promotions/promotions_details');
 });
 
 
