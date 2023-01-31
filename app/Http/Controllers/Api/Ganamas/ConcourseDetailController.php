@@ -164,6 +164,8 @@ left join ganamas_concourse s on cd.concourse_id = s._id
 
             $concourses = DB::select($sql);
 
+
+
             $result = [
                 'concourses'=>$concourses,
                 'success'=> true
