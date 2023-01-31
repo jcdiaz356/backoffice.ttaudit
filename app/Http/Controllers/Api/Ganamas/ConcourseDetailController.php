@@ -173,13 +173,59 @@ left join ganamas_concourse s on cd.concourse_id = s._id
             return $result;
         }
 
+        public function getAllConcoursesForSeller(Request $request)
+        {
+            $sql="
+            select s._id,s.id,cd.id as concurse_detail_id, s.fullname,s.sku,s.umc from ganamas_concourse_details cd
+left join ganamas_concourse s on cd.concourse_id = s._id
+ where cd.seller_id ='".$request->get('id')."' and month(cd.fecha)=".$request->get('month')." and year(cd.fecha)=".$request->get('year')."
+
+            ";
+
+            $concourses = DB::select($sql);
+
+
+
+            $result = [
+                'concourses'=>$concourses,
+                'success'=> true
+            ];
+            return $result;
+        }
+
         public function getConcourseDetail(Request $request)
         {
             $sql="
-            select s._id,s.id, s.fullname,s.sku,s.umc,s.description,date_format(s.date_concourse_start, '%d/%m/%Y') as date_concourse_start ,date_format(s.date_concourse_end, '%d/%m/%Y') as date_concourse_end, s.type_concourse ,cd.puntos,cd.soles, cd.avance_cobertura,cd.objetivo_cobertura,cd.avance_cobertura_porc,cd.objetivo_volumen,cd.avance_volumen,cd.avance_volumen_porc
+            select s._id,s.id,
+                s.fullname,s.sku,s.umc,
+                s.description,date_format(s.date_concourse_start, '%d/%m/%Y') as date_concourse_start ,
+                date_format(s.date_concourse_end, '%d/%m/%Y') as date_concourse_end,
+                s.type_concourse ,cd.puntos,cd.soles, cd.avance_cobertura,cd.objetivo_cobertura,cd.avance_cobertura_porc,cd.objetivo_volumen,cd.avance_volumen,cd.avance_volumen_porc
             from ganamas_concourse_details cd
 left join ganamas_concourse s on cd.concourse_id = s._id
  where cd.seller_id ='".$request->get('id')."' and month(cd.fecha)=".$request->get('month')." and year(cd.fecha)=".$request->get('year')." and s._id='".$request->get('concourse_id')."'
+            ";
+
+            $concourseDetail = DB::select($sql);
+
+            $result = [
+                'concourseDetail'=>$concourseDetail,
+                'success'=> true
+            ];
+            return $result;
+        }
+
+        public function getAllConcourseDetail(Request $request)
+        {
+            $sql="
+            select s._id,s.id,
+                s.fullname,s.sku,s.umc,
+                s.description,date_format(s.date_concourse_start, '%d/%m/%Y') as date_concourse_start ,
+                date_format(s.date_concourse_end, '%d/%m/%Y') as date_concourse_end,
+                s.type_concourse ,cd.puntos,cd.soles, cd.avance_cobertura,cd.objetivo_cobertura,cd.avance_cobertura_porc,cd.objetivo_volumen,cd.avance_volumen,cd.avance_volumen_porc
+            from ganamas_concourse_details cd
+left join ganamas_concourse s on cd.concourse_id = s._id
+ where cd.seller_id ='".$request->get('id')."' and month(cd.fecha)=".$request->get('month')." and year(cd.fecha)=".$request->get('year')." and cd.id='".$request->get('concourse_detail_id')."'
             ";
 
             $concourseDetail = DB::select($sql);

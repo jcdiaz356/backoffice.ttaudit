@@ -24,5 +24,7 @@
     Route::post('getEstadoCuenta', [ConcourseDetailController::class,'getEstadoCuenta']);
 
     Route::post('getConcoursesForSeller', [ConcourseDetailController::class,'getConcoursesForSeller']);
+    Route::post('getAllConcoursesForSeller', [ConcourseDetailController::class,'getAllConcoursesForSeller']);
 
     Route::post('getConcourseDetail', [ConcourseDetailController::class,'getConcourseDetail']);
+    Route::post('getAllConcourseDetail', [ConcourseDetailController::class,'getAllConcourseDetail']);
