@@ -74,20 +74,35 @@ class PromotionsController extends Controller
 
         $promotion_id = $request->get('promotion_id') ;
         $zone_id = $request->get('zone_id') ;
+        //return  $request;
+        //-- Promotion::with('promotionDetails')
 
-       //-- Promotion::with('promotionDetails')
+        //  $promotion= Promotion::with('promotionDetails')->where('id',$promotion_id)->get();
 
-//        $promotion= Promotion::where('promotion_id',$promotion_id)
-//            ->where('zone_id',$zone_id)
-//            ->get();
-        $promotion= Promotion::find($promotion_id)
-            ->with(['promotions_details' => function ($q) use($zone_id,$promotion_id) {
-              //  $q->whereHas('types', function($q) use($SpecificID) {
-                    $q->where('zone_id', $zone_id)->where('promotion_id',$promotion_id);
 
-               // });
-            }]);
+        // $promotion= Promotion::find($promotion_id)
+        //     ->with(['promotionDetails' => function ($q) use($zone_id,$promotion_id) {
+        //       //  $q->whereHas('types', function($q) use($SpecificID) {
+        //             $q->where('zone_id', $zone_id)->where('promotion_id',$promotion_id);
 
+        //       // });
+        //     }]);
+
+
+        $promotion= Promotion::with(['promotionDetails' => function ($q) use($zone_id,$promotion_id) {
+
+            $q->where('zone_id', $zone_id)->where('promotion_id',$promotion_id);
+
+        }])->where('id',$promotion_id)->first();
+
+        // $promotion= Promotion::find($promotion_id)
+        // ->whereHas('promotionDetails', function ($query) use ($zone_id,$promotion_id) {
+        //     $query->where('zone_id', $zone_id)->where('promotion_id',$promotion_id);
+        // });
+
+        //   $promotion= Promotion::whereHas('promotionDetails', function ($query) use ($zone_id,$promotion_id) {
+        //     $query->where('zone_id', $zone_id)->where('promotion_id',$promotion_id);
+        // })->where('id',$promotion_id)->first();
 
 
         return  $promotion;
