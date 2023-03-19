@@ -113,11 +113,70 @@
         public function getIndicatorsHome(Request $request)
         {
             $sql="
-            SELECT  (select FORMAT(porc_gestion,2) from ganamas_concourse_details where seller_id ='".$request->get('id')."' and month(fecha)=".$request->get('month')." and year(fecha)=".$request->get('year')." and porc_gestion !=0 order by porc_gestion desc limit 1) as porc_gestion,
-        (select FORMAT(key_gen,2) from ganamas_concourse_details where seller_id ='".$request->get('id')."' and month(fecha)=".$request->get('month')." and year(fecha)=".$request->get('year')." and key_gen !=0 order by key_gen desc limit 1) as key_gen,
-        (select FORMAT(key_home,2) from ganamas_concourse_details where seller_id ='".$request->get('id')."' and month(fecha)=".$request->get('month')." and year(fecha)=".$request->get('year')." and key_home !=0 order by key_home desc limit 1) as key_home,
-        (select FORMAT(key_foods,2) from ganamas_concourse_details where seller_id ='".$request->get('id')."' and month(fecha)=".$request->get('month')." and year(fecha)=".$request->get('year')." and key_foods !=0 order by key_foods desc limit 1) as key_food,
-        (select FORMAT(key_personal,2) from ganamas_concourse_details where seller_id ='".$request->get('id')."' and month(fecha)=".$request->get('month')." and year(fecha)=".$request->get('year')." and key_personal !=0 order by key_personal desc limit 1) as key_personal
+            SELECT  (
+                        select
+                             FORMAT(porc_gestion,2)
+                         from ganamas_concourse_details
+                         where seller_id ='".$request->get('id')."'
+                         and month(fecha)=".$request->get('month')."
+                         and year(fecha)=".$request->get('year')."
+                         and porc_gestion !=0 order by porc_gestion
+                         desc limit 1
+                     ) as porc_gestion,
+                    (
+                        select FORMAT(key_gen,2)
+                        from ganamas_concourse_details
+                        where seller_id ='".$request->get('id')."'
+                            and month(fecha)=".$request->get('month')."
+                            and year(fecha)=".$request->get('year')."
+                            and key_gen !=0
+                        order by key_gen desc limit 1
+                    )  as key_gen,
+                    (
+                        select FORMAT(key_home,2)
+                        from ganamas_concourse_details
+                        where seller_id ='".$request->get('id')."'
+                            and month(fecha)=".$request->get('month')."
+                            and year(fecha)=".$request->get('year')."
+                            and key_home !=0
+                        order by key_home desc limit 1
+                    ) as key_home,
+                    (
+                        select FORMAT(key_foods,2)
+                        from ganamas_concourse_details
+                        where seller_id ='".$request->get('id')."' and
+                            month(fecha)=".$request->get('month')." and
+                            year(fecha)=".$request->get('year')."
+                            and key_foods !=0
+                        order by key_foods desc limit 1
+                    ) as key_food,
+                    (
+                        select FORMAT(key_personal,2)
+                        from ganamas_concourse_details
+                        where seller_id ='".$request->get('id')."'
+                            and month(fecha)=".$request->get('month')."
+                            and year(fecha)=".$request->get('year')."
+                            and key_personal !=0
+                        order by key_personal desc limit 1
+                    ) as key_personal,
+                    (
+                        select created_at
+                        from ganamas_concourse_details
+                        where seller_id ='".$request->get('id')."'
+                            and month(fecha)=".$request->get('month')."
+                            and year(fecha)=".$request->get('year')."
+                            and key_personal !=0
+                        order by key_personal desc limit 1
+                    ) as created_at,
+                    (
+                        select updated_at
+                        from ganamas_concourse_details
+                        where seller_id ='".$request->get('id')."'
+                            and month(fecha)=".$request->get('month')."
+                            and year(fecha)=".$request->get('year')."
+                            and key_personal !=0
+                        order by key_personal desc limit 1
+                    ) as updated_at
             ";
 
             $indicators = DB::select($sql);
