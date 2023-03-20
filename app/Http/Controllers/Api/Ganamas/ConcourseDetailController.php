@@ -160,22 +160,16 @@
                         order by key_personal desc limit 1
                     ) as key_personal,
                     (
-                        select DATE_FORMAT(created_at, '%d-%m-%Y')
-                        from ganamas_concourse_details
-                        where seller_id ='".$request->get('id')."'
-                            and month(fecha)=".$request->get('month')."
-                            and year(fecha)=".$request->get('year')."
-                            and key_personal !=0
-                        order by key_personal desc limit 1
+                       SELECT
+                         DATE_FORMAT(max(`ganamas_concourse_details`.`created_at`), '%d-%m-%Y')  AS `FIELD_1`
+                        FROM
+                          `ganamas_concourse_details`
                     ) as created_at,
                     (
-                        select updated_at
-                        from ganamas_concourse_details
-                        where seller_id ='".$request->get('id')."'
-                            and month(fecha)=".$request->get('month')."
-                            and year(fecha)=".$request->get('year')."
-                            and key_personal !=0
-                        order by key_personal desc limit 1
+                        SELECT
+                         DATE_FORMAT(max(`ganamas_concourse_details`.`updated_at`), '%d-%m-%Y')  AS `FIELD_1`
+                        FROM
+                          `ganamas_concourse_details`
                     ) as updated_at
             ";
 
