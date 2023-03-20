@@ -160,7 +160,7 @@
                         order by key_personal desc limit 1
                     ) as key_personal,
                     (
-                        select created_at
+                        select DATE_FORMAT(created_at, '%d-%m-%Y')
                         from ganamas_concourse_details
                         where seller_id ='".$request->get('id')."'
                             and month(fecha)=".$request->get('month')."
