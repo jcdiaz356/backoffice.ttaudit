@@ -283,8 +283,17 @@ left join ganamas_concourse s on cd.concourse_id = s._id
 
             $concourseDetail = DB::select($sql);
 
+            $updated_atSql="SELECT
+                         DATE_FORMAT(max(`ganamas_concourse_details`.`updated_at`), '%d-%m-%Y')  AS `updated_at`
+                        FROM
+                          `ganamas_concourse_details`";
+
+            $updated_at = DB::select($updated_atSql);
+
+
             $result = [
                 'concourseDetail'=>$concourseDetail,
+                'updated_at'=>$updated_at,
                 'success'=> true
             ];
             return $result;
