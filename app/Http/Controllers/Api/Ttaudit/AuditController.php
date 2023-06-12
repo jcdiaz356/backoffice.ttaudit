@@ -47,4 +47,16 @@ class AuditController extends Controller
         return $result;
 
     }
+
+    public function getBrandsForCompanyCategory(Request $request)
+    {
+
+        $company_id= $request->get('company_id');
+        $publicity_id = $request->get('publicity_id');
+
+        $sql= "select id,fullname from products where id in (select product_id from stock_product_pop 
+               where company_id=".$company_id." and publicity_id=".$publicity_id.")  order by fullname DESC";
+        $poll_details = DB::select($sql);
+        return $poll_details;
+    }
 }
