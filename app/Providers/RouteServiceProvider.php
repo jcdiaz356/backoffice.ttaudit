@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Route;
 
 class RouteServiceProvider extends ServiceProvider
 {
+
+    protected $namespaceApiTtaudit = 'App\Http\Controllers\Api\Ttaudit';
     /**
      * The path to the "home" route for your application.
      *
@@ -38,6 +40,7 @@ class RouteServiceProvider extends ServiceProvider
         });
 
         $this->mapGanamasApiRoutes();
+        $this->mapTtauditApiRoutes();
     }
 
     /**
@@ -52,6 +55,21 @@ class RouteServiceProvider extends ServiceProvider
             ->group(function (){
                 require (base_path('routes/api/ganamas/api-v1.php'));
             });
+    }
+
+    /**
+     * Rutas para TTaudit
+     * @return void
+     */
+    protected function mapTtauditApiRoutes()
+    {
+        Route::prefix('api/v1/ttaudit')
+            ->middleware('api')
+            ->namespace($this->namespaceApiTtaudit)
+            ->group(function (){
+                require (base_path('routes/api/ttaudit/audits-v1.php'));
+            });
+
     }
 
     /**
