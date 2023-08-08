@@ -10,6 +10,8 @@
     Route::post('promotionsForZone', [PromotionsController::class,'promotionsForZone']);
 
     Route::post('getUserForCode', [UserController::class,'getUserForCode']);
+    Route::post('getUserLoginForCode', [UserController::class,'getUserLoginForCode']);
+    Route::post('changePassword', [UserController::class,'changePassword']);
 
     Route::post('loadUserSaveTable',[UserController::class,'loadUserSaveTable']);
 

@@ -9,6 +9,7 @@ class GanamasUser extends Model
 {
     use HasFactory;
     protected $table = 'ganamas_user';
+    protected $hidden =['password'];
 
     protected $fillable = [
         '_id',
@@ -19,6 +20,7 @@ class GanamasUser extends Model
         'dex_id',
         'codigo_dex',
         'cod_territorio',
+        'password',
         'active'
     ];
 

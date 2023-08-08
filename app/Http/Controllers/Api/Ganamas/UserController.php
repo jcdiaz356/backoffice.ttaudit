@@ -174,6 +174,112 @@ SELECT
 
     }
 
+
+    public function getUserLoginForCode(Request $request) {
+                $sql = "
+                    SELECT
+            DATE_FORMAT(CURDATE(), '%m') as month_number,
+            DATE_FORMAT(CURDATE(), '%Y') as year_number,
+            CASE
+            WHEN DATE_FORMAT(CURDATE(), '%m') = '01' THEN 'ENERO'
+            WHEN DATE_FORMAT(CURDATE(), '%m') = '02' THEN 'FEBRERO'
+            WHEN DATE_FORMAT(CURDATE(), '%m') = '01' THEN 'MARZO'
+            WHEN DATE_FORMAT(CURDATE(), '%m') = '04' THEN 'ABRIL'
+            WHEN DATE_FORMAT(CURDATE(), '%m') = '05' THEN 'MAYO'
+            WHEN DATE_FORMAT(CURDATE(), '%m') = '06' THEN 'JUNIO'
+            WHEN DATE_FORMAT(CURDATE(), '%m') = '07' THEN 'JULIO'
+            WHEN DATE_FORMAT(CURDATE(), '%m') = '08' THEN 'AGOSTO'
+            WHEN DATE_FORMAT(CURDATE(), '%m') = '09' THEN 'SEPTIEMBRE'
+            WHEN DATE_FORMAT(CURDATE(), '%m') = '10' THEN 'OCTUBRE'
+            WHEN DATE_FORMAT(CURDATE(), '%m') = '11' THEN 'NOVIEMBRE'
+            WHEN DATE_FORMAT(CURDATE(), '%m') = '12' THEN 'DICIEMBRE'
+          END as month
+        UNION
+        SELECT
+            DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH), '%m') as month_number,
+            DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH), '%Y') as year_number,
+            CASE
+            WHEN DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH), '%m') = '01' THEN 'ENERO'
+            WHEN DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH), '%m') = '02' THEN 'FEBRERO'
+            WHEN DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH), '%m') = '03' THEN 'MARZO'
+            WHEN DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH), '%m') = '04' THEN 'ABRIL'
+            WHEN DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH), '%m') = '05' THEN 'MAYO'
+            WHEN DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH), '%m') = '06' THEN 'JUNIO'
+            WHEN DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH), '%m') = '07' THEN 'JULIO'
+            WHEN DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH), '%m') = '08' THEN 'AGOSTO'
+            WHEN DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH), '%m') = '09' THEN 'SEPTIEMBRE'
+            WHEN DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH), '%m') = '10' THEN 'OCTUBRE'
+            WHEN DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH), '%m') = '11' THEN 'NOVIEMBRE'
+            WHEN DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH), '%m') = '12' THEN 'DICIEMBRE'
+          END as month
+        UNION
+        SELECT
+            DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 2 MONTH), '%m') as month_number,
+            DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 2 MONTH), '%Y') as year_number,
+            CASE
+            WHEN DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 2 MONTH), '%m') = '01' THEN 'ENERO'
+            WHEN DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 2 MONTH), '%m') = '02' THEN 'FEBRERO'
+            WHEN DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 2 MONTH), '%m') = '03' THEN 'MARZO'
+            WHEN DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 2 MONTH), '%m') = '04' THEN 'ABRIL'
+            WHEN DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 2 MONTH), '%m') = '05' THEN 'MAYO'
+            WHEN DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 2 MONTH), '%m') = '06' THEN 'JUNIO'
+            WHEN DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 2 MONTH), '%m') = '07' THEN 'JULIO'
+            WHEN DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 2 MONTH), '%m') = '08' THEN 'AGOSTO'
+            WHEN DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 2 MONTH), '%m') = '09' THEN 'SEPTIEMBRE'
+            WHEN DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 2 MONTH), '%m') = '10' THEN 'OCTUBRE'
+            WHEN DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 2 MONTH), '%m') = '11' THEN 'NOVIEMBRE'
+            WHEN DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 2 MONTH), '%m') = '12' THEN 'DICIEMBRE'
+         END as month
+                    ";
+        //Verificando si exite el código del user
+        if(GanamasUser::where('cod_territorio',$request->get('code'))
+            ->where('password',$request->get('password'))
+            ->where('active',1)
+            ->exists()){
+            $user = DB::table('ganamas_user as u')
+                ->select('u._id as id','u.cod_territorio as code','u.fullname as name','u.ffvv',
+                    'd.fullname as dex','d._id','dex_id','d.zone_id','z.name as  zone_name')
+                ->leftJoin('ganamas_dex as d', 'd.id', '=', 'u.dex_id')
+                ->leftJoin('ganamas_zones as z', 'd.zone_id', '=', 'z.id')
+                ->where('u.cod_territorio',$request->get('code'))
+                ->where('u.active',1)
+                ->first();
+
+
+            $months = DB::select($sql);
+
+            $result = [
+                'user'=>$user,
+                'months'=>$months,
+                'success'=> true
+            ];
+        }else{
+            $months = DB::select($sql);
+            $result = [
+                'user'=>null,
+                'months'=>$months,
+                'success'=> false
+            ];
+        }
+
+        return $result;
+
+    }
+    public function changePassword(Request $request) {
+
+
+
+        $affectedRows = GanamasUser::where("cod_territorio", $request->get('code'))->update(["password" => $request->get('password')]);
+
+            $result = [
+                'rows_afected' =>$affectedRows,
+                'success'=> true
+            ];
+
+
+        return $result;
+
+    }
     public function loadUserSaveTable()
     {
 
