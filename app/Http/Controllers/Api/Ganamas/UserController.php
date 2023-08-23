@@ -74,7 +74,7 @@ class UserController extends Controller
     CASE
     WHEN DATE_FORMAT(CURDATE(), '%m') = '01' THEN 'ENERO'
     WHEN DATE_FORMAT(CURDATE(), '%m') = '02' THEN 'FEBRERO'
-    WHEN DATE_FORMAT(CURDATE(), '%m') = '01' THEN 'MARZO'
+    WHEN DATE_FORMAT(CURDATE(), '%m') = '03' THEN 'MARZO'
     WHEN DATE_FORMAT(CURDATE(), '%m') = '04' THEN 'ABRIL'
     WHEN DATE_FORMAT(CURDATE(), '%m') = '05' THEN 'MAYO'
     WHEN DATE_FORMAT(CURDATE(), '%m') = '06' THEN 'JUNIO'

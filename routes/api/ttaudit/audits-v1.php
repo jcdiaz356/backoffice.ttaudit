@@ -10,4 +10,5 @@ Route::prefix('audits')->group(function (){
     Route::post('getProductsAuditPreview', [AuditController::class,'getProductsAuditPreview']);
     Route::post('getFotoExitoForPoll', [AuditController::class,'getFotoExitoForPoll']);
 
+    Route::post('getResposeBrandsForCompany', [AuditController::class,'getBrandsForCompanyCategory']);
 });

@@ -18,7 +18,6 @@ class AuditController extends Controller
     }
 
 
-
     public function getResposeProductsAuditResult(Request $request){
 
         $company_id = $request->get('company_id');
