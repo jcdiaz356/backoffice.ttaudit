@@ -41,8 +41,7 @@ class AuditController extends Controller
             ->leftJoin('products', 'poll_details.product_id', '=', 'products.id')
             ->where("poll_details.company_id",$company_id)
             ->where("poll_details.store_id",$store_id)
-//            ->where("polls.orden",$orden)
-            ->whereIn("polls.orden",[4,7])
+            ->whereIn("polls.orden",[4,7,50])
             ->get();
 
         return $result;
