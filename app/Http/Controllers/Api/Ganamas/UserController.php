@@ -178,6 +178,7 @@ SELECT
     public function getUserLoginForCode(Request $request) {
                 $sql = "
                     SELECT
+                    '1' as order_month,
             DATE_FORMAT(CURDATE(), '%m') as month_number,
             DATE_FORMAT(CURDATE(), '%Y') as year_number,
             CASE
@@ -196,6 +197,7 @@ SELECT
           END as month
         UNION
         SELECT
+            '2' as order_month,
             DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH), '%m') as month_number,
             DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH), '%Y') as year_number,
             CASE
@@ -214,6 +216,7 @@ SELECT
           END as month
         UNION
         SELECT
+            '3' as order_month,
             DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 2 MONTH), '%m') as month_number,
             DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 2 MONTH), '%Y') as year_number,
             CASE
