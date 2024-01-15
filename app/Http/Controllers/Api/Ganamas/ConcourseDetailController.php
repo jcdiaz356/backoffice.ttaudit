@@ -133,7 +133,7 @@
                         order by key_gen desc limit 1
                     )  as key_gen,
                     (
-                        select FORMAT(key_home,2)
+                        select key_home
                         from ganamas_concourse_details
                         where seller_id ='".$request->get('id')."'
                             and month(fecha)=".$request->get('month')."
